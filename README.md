@@ -4,7 +4,7 @@
 
 ## 🎬 Featured demo
 
-### [▶ Watch the Catalyst demo](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
+## 🎥 [Watch the full-quality Catalyst demo with audio](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
 
 [![Catalyst demo preview](./catalyst-demo-preview.gif)](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
 
