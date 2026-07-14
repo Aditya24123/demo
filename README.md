@@ -2,7 +2,6 @@
 
 AI-native **materials discovery workspace**: go from a natural-language requirement to screened candidates, graph context, structure inspection, and agent-driven research ? all against a local Materials Project?class snapshot.
 
-This repository is the public product source: [github.com/Rtx09x/catalyst](https://github.com/Rtx09x/catalyst).
 
 ## What it does
 
