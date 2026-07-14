@@ -6,6 +6,10 @@
 
 ### [▶ Watch the Catalyst demo](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
 
+[![Catalyst demo preview](./catalyst-demo-preview.gif)](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
+
+*Inline preview above · click for the full audio-enabled recording.*
+
 Catalyst turns dense scientific records into an interactive investigation. It combines material discovery tools—3D crystal structures, spectra, properties, and evidence graphs—with a context-aware genomics explorer that understands the DNA window currently on screen.
 
 ### From Sunscreen to DNA
