@@ -7,6 +7,9 @@ export type SpectraDetails = {
     spectra?: {
       records?: Array<{
         material_id?: string;
+        kind?: string;
+        title?: string;
+        source?: string;
         absorbing_element?: string;
         edge?: string;
         spectrum?: { x?: number[]; y?: number[]; energy?: number[]; intensity?: number[] };
@@ -34,7 +37,7 @@ export function SpectraPanel({ details, loading, error }: { details: SpectraDeta
           <div className="text-base font-semibold">No spectra in local snapshot</div>
           <p className="mt-2 text-sm" style={{ color: 'var(--cat-text-3)' }}>
             This material has no XAS/XANES curves in the Catalyst processed index. Structure and
-            property tabs still work ? try another material if you need spectra demos.
+            property tabs still work — try another material if you need spectra demos.
           </p>
         </div>
       </div>
@@ -48,7 +51,8 @@ export function SpectraPanel({ details, loading, error }: { details: SpectraDeta
         const x = spectrum.x || spectrum.energy || [];
         const y = spectrum.y || spectrum.intensity || [];
         const color = SPECTRUM_COLORS[index % SPECTRUM_COLORS.length];
-        const title = `${record.absorbing_element || 'Element'}${record.edge ? ` ? ${record.edge}` : ''} XAS`;
+        const title = record.title || `${record.absorbing_element || 'Element'}${record.edge ? ` · ${record.edge}` : ''} ${record.kind || 'XAS'}`;
+        const subtitle = record.source || (record.kind === 'UV optical response' ? 'Cached UV optical response · energy vs intensity' : 'Absorbing edge spectrum · energy vs intensity');
         return (
           <article
             key={`${record.material_id || 'spec'}-${record.absorbing_element || 'el'}-${record.edge || index}-${index}`}
@@ -57,7 +61,7 @@ export function SpectraPanel({ details, loading, error }: { details: SpectraDeta
             <header className="jarvis-spectrum-card-header">
               <div>
                 <div className="jarvis-spectrum-title">{title}</div>
-                <div className="jarvis-spectrum-subtitle">Absorbing edge spectrum ? energy vs intensity</div>
+                <div className="jarvis-spectrum-subtitle">{subtitle}</div>
               </div>
               <span className="jarvis-spectrum-swatch" style={{ background: color.stroke }} />
             </header>
@@ -198,10 +202,10 @@ function SpectrumChart({
       <div className="jarvis-spectrum-meta">
         <span>
           {points.length.toLocaleString()} pts
-          {rawCount > points.length ? ` ? downsampled from ${rawCount.toLocaleString()}` : ''}
+          {rawCount > points.length ? ` · downsampled from ${rawCount.toLocaleString()}` : ''}
         </span>
         <span>
-          {formatTick(minX)}?{formatTick(maxX)} eV
+          {formatTick(minX)}–{formatTick(maxX)} eV
         </span>
       </div>
     </div>
@@ -224,7 +228,7 @@ function buildSpectrumChart(x: number[], y: number[]) {
   if (raw.length < 2) return null;
 
   raw.sort((a, b) => a.x - b.x);
-  // Collapse exact-x duplicates (keep max intensity ? XAS peaks matter).
+  // Collapse exact-x duplicates (keep max intensity — XAS peaks matter).
   const collapsed: Pt[] = [];
   for (const p of raw) {
     const last = collapsed[collapsed.length - 1];
@@ -262,7 +266,7 @@ function buildSpectrumChart(x: number[], y: number[]) {
   };
 }
 
-/** Largest-Triangle-Three-Buckets downsampling ? keeps peaks without jagged noise. */
+/** Largest-Triangle-Three-Buckets downsampling — keeps peaks without jagged noise. */
 function downsampleLttb(data: Pt[], threshold: number): Pt[] {
   if (data.length <= threshold || threshold < 3) return data;
   const sampled: Pt[] = [data[0]];
@@ -305,7 +309,7 @@ function downsampleLttb(data: Pt[], threshold: number): Pt[] {
 
 function toSvgPath(points: Pt[], closeToBaseline: boolean, baselineY = 0): string {
   if (points.length < 2) return '';
-  // Catmull-Rom ? cubic Bezier for a smooth XAS-looking curve.
+  // Catmull-Rom → cubic Bezier for a smooth XAS-looking curve.
   const d: string[] = [`M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`];
   for (let i = 0; i < points.length - 1; i += 1) {
     const p0 = points[Math.max(0, i - 1)];

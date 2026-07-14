@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from catalyst.agent.registry import gemini_function_declarations, openai_tools_schema, tool_names
 from catalyst.demo_scenarios import (
     BACKUP_SUNLIGHT_PROMPT,
@@ -10,6 +12,10 @@ from catalyst.demo_scenarios import (
     ordered_action_types,
     scenario_for_prompt,
 )
+from catalyst.local_store import LocalCatalystStore
+
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def test_trigger_normalization_is_exact_and_intentional() -> None:
@@ -64,3 +70,12 @@ def test_demo_is_a_canonical_shared_tool() -> None:
     assert "control_genome_view" in names
     assert "run_demo_scenario" not in {item["name"] for item in gemini_function_declarations()}
     assert "run_demo_scenario" not in {item["function"]["name"] for item in openai_tools_schema()}
+
+
+def test_zno_showcase_has_a_cached_spectra_payload() -> None:
+    details = LocalCatalystStore(REPO_ROOT).material_details("mp-deb", sections=["spectra"])
+    spectra = (details or {}).get("details", {}).get("spectra", {})
+    record = (spectra.get("records") or [])[0]
+    assert spectra.get("source") == "demo_cache"
+    assert record["title"] == "ZnO UV response"
+    assert len(record["spectrum"]["energy"]) == len(record["spectrum"]["intensity"])
