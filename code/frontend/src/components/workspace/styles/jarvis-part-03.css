@@ -1,0 +1,304 @@
+
+/* Standalone inspector control ? same soft circle feel as left sidebar icon button. */
+.jarvis-inspector-toggle {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  box-shadow: none;
+}
+
+/* Keep description contained ? never bleed over property rows below. */
+.jarvis-material-summary p {
+  -webkit-line-clamp: unset;
+  display: block;
+  max-height: min(42vh, 22em);
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.5;
+  background: var(--color-bg-sidebar);
+}
+
+/* ?? Spectra charts ???????????????????????????????????????????????????????? */
+.jarvis-spectra-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--color-bg-main, #0b0b0b);
+}
+
+.jarvis-voice-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  min-height: 18px;
+  padding: 0 8px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.jarvis-voice-status strong {
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.jarvis-voice-status-connecting {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.jarvis-voice-error {
+  margin-top: 8px;
+  padding: 0 8px;
+  color: #ff8b8b;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.jarvis-composer-actions {
+  display: inline-flex;
+  align-items: center;
+  align-self: end;
+  gap: 4px;
+  flex-shrink: 0;
+  min-height: 36px;
+  /* Keep mic/send on the bottom edge while textarea grows upward. */
+  padding-bottom: 0;
+}
+
+.jarvis-composer-icon {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.jarvis-composer-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.jarvis-composer-icon:hover {
+  background: #303030;
+}
+
+.jarvis-send-button,
+.jarvis-voice-button,
+.jarvis-voice-pill {
+  display: inline-flex;
+  min-width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 120ms ease, background-color 120ms ease, opacity 120ms ease;
+}
+
+.jarvis-send-button {
+  background: #ffffff;
+  color: #000000;
+}
+
+.jarvis-send-button:disabled {
+  opacity: 0.5;
+}
+
+.jarvis-voice-button {
+  background: #ffffff;
+  color: #000000;
+}
+
+.jarvis-voice-button.active {
+  background: rgba(10, 132, 255, 0.22);
+  color: var(--jarvis-blue);
+}
+
+.jarvis-voice-pill {
+  gap: 8px;
+  min-width: 74px;
+  padding: 0 14px;
+  background: var(--jarvis-blue);
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.jarvis-voice-pill.connecting {
+  background: #e5e5e5;
+  color: #000000;
+}
+
+.jarvis-attachment-chip {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  padding: 6px 8px 6px 10px;
+  font-size: 12px;
+}
+
+.jarvis-attachment-chip button {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-secondary);
+}
+
+.jarvis-composer-icon.active {
+  background: rgba(10, 132, 255, 0.2);
+  color: var(--jarvis-blue);
+}
+
+.jarvis-codex-composer {
+  position: relative;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 18px;
+  background: var(--color-bg-elevated);
+  padding: 10px 42px 10px 12px;
+}
+
+.jarvis-codex-composer textarea {
+  width: 100%;
+  resize: none;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 13px;
+  line-height: 19px;
+  outline: none;
+}
+
+.jarvis-codex-composer button {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+}
+
+.jarvis-codex-composer button:disabled {
+  opacity: 0.35;
+}
+
+.jarvis-dialog-backdrop {
+  position: fixed;
+  z-index: 900;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.58);
+  padding: 16px;
+  overscroll-behavior: contain;
+}
+
+.jarvis-project-dialog {
+  width: min(100%, 380px);
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 10px;
+  background: var(--color-bg-elevated);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
+  padding: 16px;
+}
+
+.jarvis-settings-dialog {
+  width: min(calc(100vw - 32px), 720px);
+  min-height: 440px;
+  max-height: min(680px, calc(100dvh - 32px));
+  overflow: hidden;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 10px;
+  background: var(--color-bg-elevated);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
+}
+
+.jarvis-settings-header {
+  display: flex;
+  height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  padding: 0 16px 0 20px;
+}
+
+.jarvis-settings-header h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.jarvis-settings-layout {
+  display: grid;
+  min-height: 384px;
+  grid-template-columns: 180px minmax(0, 1fr);
+}
+
+.jarvis-settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-right: 1px solid var(--color-sidebar-border);
+  padding: 12px 8px;
+}
+
+.jarvis-settings-nav button {
+  height: 36px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.jarvis-settings-nav button:hover,
+.jarvis-settings-nav button.active {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-settings-content {
+  overflow-y: auto;
+  padding: 10px 22px 24px;
+}

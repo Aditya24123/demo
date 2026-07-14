@@ -1,0 +1,702 @@
+{
+  "source": "catalyst.agent.tools_decl.TOOL_DECLARATIONS",
+  "tools": [
+    {
+      "description": "Open a grounded DNA Variant Explorer demo case (brca1, hbb, or ctg). This is educational showcase data, not clinical interpretation.",
+      "name": "inspect_genomics_case",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "enum": [
+              "brca1",
+              "hbb",
+              "ctg"
+            ],
+            "type": "string"
+          },
+          "repeat_count": {
+            "description": "Optional CTG count from 0 to 100 for the ctg case.",
+            "type": "integer"
+          },
+          "reset_camera": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Return a safe structured command for the BRCA1 DNA view: highlight a position, zoom a bounded window, or reveal the currently visible sequence. This controls the UI only and never retrieves a full gene sequence.",
+      "name": "control_genome_view",
+      "parameters": {
+        "properties": {
+          "action": {
+            "enum": [
+              "highlight",
+              "zoom",
+              "showSequence"
+            ],
+            "type": "string"
+          },
+          "end": {
+            "description": "Gene-relative inclusive end for zoom.",
+            "type": "integer"
+          },
+          "gene": {
+            "description": "Currently BRCA1; additional genes can be registered later.",
+            "type": "string"
+          },
+          "position": {
+            "description": "Gene-relative one-based position for highlight.",
+            "type": "integer"
+          },
+          "start": {
+            "description": "Gene-relative inclusive start for zoom.",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Resolve a formula, free-text material mention, or Materials Project id to a local Catalyst material id.",
+      "name": "resolve_material",
+      "parameters": {
+        "properties": {
+          "query": {
+            "description": "Formula, mp-id, or material mention.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Search and filter the local Catalyst materials snapshot.",
+      "name": "search_materials",
+      "parameters": {
+        "properties": {
+          "band_gap_max": {
+            "type": "number"
+          },
+          "band_gap_min": {
+            "type": "number"
+          },
+          "chemsys": {
+            "type": "string"
+          },
+          "density_max": {
+            "type": "number"
+          },
+          "density_min": {
+            "type": "number"
+          },
+          "elements": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "magnetic": {
+            "type": "boolean"
+          },
+          "metal": {
+            "type": "boolean"
+          },
+          "query": {
+            "type": "string"
+          },
+          "stable": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load grounded properties, evidence, and graph context for one material id or resolvable formula.",
+      "name": "get_material_workspace",
+      "parameters": {
+        "properties": {
+          "material_id": {
+            "description": "Local material id, mp-id, or formula.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load graph neighbors for one material and switch the UI to the Neighbors tab (not the structure viewer). Use when the user asks for neighborhood/neighbours graph.",
+      "name": "get_neighborhood",
+      "parameters": {
+        "properties": {
+          "depth": {
+            "description": "Hop depth 1-5 (default 1).",
+            "type": "integer"
+          },
+          "material_id": {
+            "description": "Local material id, mp-id, or formula.",
+            "type": "string"
+          },
+          "open_inspector": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Inspect one graph edge by id and return its grounded relation/evidence detail.",
+      "name": "inspect_edge",
+      "parameters": {
+        "properties": {
+          "edge_id": {
+            "description": "Graph edge id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "edge_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Rank candidate materials for a natural-language requirement. Use for find/recommend/good/best candidate requests.",
+      "name": "screen_candidates",
+      "parameters": {
+        "properties": {
+          "include_research_candidates": {
+            "type": "boolean"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "requirement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "requirement"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Compare two or more local material ids.",
+      "name": "compare_materials",
+      "parameters": {
+        "properties": {
+          "include_edges": {
+            "type": "boolean"
+          },
+          "include_evidence": {
+            "type": "boolean"
+          },
+          "material_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "material_ids"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Ask the UI to select, highlight, zoom to, and optionally open the inspector for a material.",
+      "name": "select_material",
+      "parameters": {
+        "properties": {
+          "material_id": {
+            "description": "Local material id, mp-id, or formula.",
+            "type": "string"
+          },
+          "open_inspector": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": true
+    },
+    {
+      "description": "Export a grounded subgraph for selected material ids.",
+      "name": "export_subgraph",
+      "parameters": {
+        "properties": {
+          "include_edge_details": {
+            "type": "boolean"
+          },
+          "include_evidence": {
+            "type": "boolean"
+          },
+          "material_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "material_ids"
+        ],
+        "type": "object"
+      },
+      "ui_safe": true
+    },
+    {
+      "description": "Start literature/research mode when local data is insufficient.",
+      "name": "start_research",
+      "parameters": {
+        "properties": {
+          "limit": {
+            "type": "integer"
+          },
+          "query": {
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Ingest a URL into local research mode when enabled.",
+      "name": "ingest_url",
+      "parameters": {
+        "properties": {
+          "purpose": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "List files, folders, notebook entries, artifacts, and Codex state for the active Catalyst project.",
+      "name": "list_project_files",
+      "parameters": {
+        "properties": {
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Read one UTF-8 text file from files, notebook, or artifacts in the active project.",
+      "name": "read_project_file",
+      "parameters": {
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Create or replace one UTF-8 project text file inside files, notebook, or artifacts.",
+      "name": "write_project_file",
+      "parameters": {
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "content"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Read the active project's primary Markdown research notebook.",
+      "name": "read_project_notebook",
+      "parameters": {
+        "properties": {
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Replace the active project's primary Markdown research notebook with updated content.",
+      "name": "update_project_notebook",
+      "parameters": {
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Delegate a substantial file, code, analysis, or notebook task to Codex inside the active project folder.",
+      "name": "run_workspace_agent",
+      "parameters": {
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "reasoning_effort": {
+            "enum": [
+              "minimal",
+              "low",
+              "medium",
+              "high",
+              "xhigh"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load selected property/evidence/spectra detail sections for a material.",
+      "name": "get_material_details",
+      "parameters": {
+        "properties": {
+          "downsample": {
+            "type": "boolean"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "material_id": {
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load crystal structure lattice, sites, bonds, and viewer payload for a material.",
+      "name": "get_material_structure",
+      "parameters": {
+        "properties": {
+          "material_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load the global materials graph overview and cluster summaries.",
+      "name": "get_graph_overview",
+      "parameters": {
+        "properties": {
+          "limit_clusters": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Inspect a material, element, or cluster graph node by node id.",
+      "name": "inspect_graph_node",
+      "parameters": {
+        "properties": {
+          "node_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Persist a named candidate set from valid local material ids.",
+      "name": "create_candidate_set",
+      "parameters": {
+        "properties": {
+          "material_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "requirement": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "material_ids"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "List persisted candidate sets, optionally for the current session.",
+      "name": "list_candidate_sets",
+      "parameters": {
+        "properties": {
+          "session_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load one persisted candidate set by id.",
+      "name": "get_candidate_set",
+      "parameters": {
+        "properties": {
+          "candidate_set_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "candidate_set_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Load one literature research run and its source hits/errors.",
+      "name": "get_research_run",
+      "parameters": {
+        "properties": {
+          "run_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "List recent Codex and analysis runs in the active project.",
+      "name": "list_project_runs",
+      "parameters": {
+        "properties": {
+          "limit": {
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "List configured scientific inference services such as protein folding or property predictors.",
+      "name": "list_model_services",
+      "parameters": {
+        "properties": {},
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Run one preconfigured scientific model service with structured inputs. The service URL is never agent-controlled.",
+      "name": "run_model_service",
+      "parameters": {
+        "properties": {
+          "inputs": {
+            "type": "object"
+          },
+          "project_id": {
+            "type": "string"
+          },
+          "service_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "service_id",
+          "inputs"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Run a short allowlisted shell command in the project or agent workspace (python -c, pip show, dir/ls, type/cat of project files). Not unrestricted shell.",
+      "name": "run_allowlisted_shell",
+      "parameters": {
+        "properties": {
+          "command": {
+            "description": "Full command line (must match allowlist).",
+            "type": "string"
+          },
+          "project_id": {
+            "description": "Optional project id for cwd.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "command"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Open a project material artifact (*.catalyst.json) or material id into the main Catalyst structure viewer. Switches UI to materials home.",
+      "name": "open_project_material",
+      "parameters": {
+        "properties": {
+          "material_id": {
+            "description": "Or open by material id directly",
+            "type": "string"
+          },
+          "path": {
+            "description": "Project-relative path to .catalyst.json",
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ui_safe": false
+    },
+    {
+      "description": "Save/link a material into the project as files/materials/<id>.catalyst.json.",
+      "name": "save_project_material",
+      "parameters": {
+        "properties": {
+          "material_id": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "material_id"
+        ],
+        "type": "object"
+      },
+      "ui_safe": false
+    }
+  ],
+  "version": 1
+}

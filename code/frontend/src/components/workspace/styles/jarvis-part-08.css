@@ -1,0 +1,283 @@
+
+.jarvis-right-tab {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.jarvis-right-tab.active {
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-primary);
+}
+
+.jarvis-right-close {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.jarvis-right-close:hover {
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-primary);
+}
+
+.jarvis-properties-body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.jarvis-properties-sticky {
+  flex: 0 0 auto;
+  z-index: 2;
+  padding: 16px 16px 0;
+  background: var(--color-bg-sidebar);
+  border-bottom: 1px solid transparent;
+}
+
+.jarvis-properties-scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 12px 16px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+.jarvis-properties-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.jarvis-properties-title {
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1.18;
+}
+
+.jarvis-muted {
+  color: var(--color-text-secondary);
+}
+
+.jarvis-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.jarvis-form-label {
+  display: block;
+  margin: 12px 0 6px;
+  color: var(--color-text-primary);
+  font-size: 13px;
+}
+
+.jarvis-form-input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 7px;
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+  padding: 8px 9px;
+}
+
+.jarvis-form-input:focus {
+  border-color: var(--jarvis-blue);
+}
+
+.jarvis-form-textarea {
+  resize: vertical !important;
+}
+
+.jarvis-form-error {
+  margin-top: 10px;
+  color: #ff8b8b;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.jarvis-secondary-button,
+.jarvis-primary-button {
+  height: 34px;
+  border-radius: 7px;
+  font-size: 13px;
+  padding: 0 12px;
+}
+
+.jarvis-secondary-button {
+  border: 1px solid var(--color-sidebar-border);
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+.jarvis-primary-button {
+  border: 1px solid var(--jarvis-blue);
+  background: var(--jarvis-blue);
+  color: #fff;
+}
+
+.jarvis-primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.jarvis-brand-logo {
+  display: block;
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+}
+
+.jarvis-recent-row {
+  display: flex;
+  width: 100%;
+  min-height: 34px;
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.jarvis-recent-row:hover,
+.jarvis-recent-row.active {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-chats-section {
+  padding-bottom: 14px;
+}
+
+.jarvis-chat-row-wrap {
+  position: relative;
+}
+
+.jarvis-chat-rename-input,
+.jarvis-session-title-input {
+  width: 100%;
+  min-height: 32px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  padding: 4px 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.jarvis-session-title-button {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: text;
+}
+
+.jarvis-session-title-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.jarvis-chat-menu {
+  position: absolute;
+  z-index: 30;
+  top: 100%;
+  left: 8px;
+  right: 8px;
+  display: grid;
+  gap: 2px;
+  margin-top: 4px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 10px;
+  background: var(--color-bg-elevated);
+  padding: 4px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.jarvis-chat-menu button {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 8px 10px;
+  font-size: 13px;
+  text-align: left;
+}
+
+.jarvis-chat-menu button:hover {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-chat-menu button.danger {
+  color: #ff7b72;
+}
+
+.jarvis-hop-chip {
+  display: inline-flex;
+  height: 32px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 0 10px;
+  font-size: 12px;
+  cursor: ns-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.jarvis-hop-chip:hover {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-hop-label {
+  color: var(--color-text-secondary);
+  text-transform: lowercase;
+}
+
+.jarvis-hop-value {
+  min-width: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+}
+
+.jarvis-key-properties {
+  padding: 2px 0 12px;
+}

@@ -1,0 +1,275 @@
+
+.jarvis-inspector-toggle:hover {
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-primary);
+}
+
+.jarvis-inspector-toggle.active {
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-primary);
+}
+
+.jarvis-material-title {
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0;
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.jarvis-key-properties,
+.jarvis-property-group-header,
+.jarvis-property-metric-row {
+  border-bottom: 1px solid var(--color-sidebar-border);
+  background: transparent;
+}
+
+.jarvis-property-label {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.jarvis-property-value {
+  margin-top: 2px;
+  color: var(--color-text-primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.jarvis-property-group-header,
+.jarvis-property-metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 2px;
+}
+
+.jarvis-property-metric-row {
+  display: block;
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg-sidebar);
+}
+
+.jarvis-property-group-header {
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg-sidebar);
+}
+
+.jarvis-property-metric-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jarvis-property-metric-main-stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.jarvis-property-metric-label {
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.jarvis-property-metric-value {
+  max-width: 48%;
+  flex: 0 1 auto;
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jarvis-property-metric-value-long {
+  max-width: 100%;
+  max-height: 4.6em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  scrollbar-width: thin;
+}
+
+.jarvis-material-summary {
+  position: relative;
+  z-index: 0;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  background: var(--color-bg-sidebar);
+}
+
+.jarvis-material-summary-text {
+  /* Room for normal material blurbs without forced scroll */
+  max-height: min(42vh, 22em);
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  scrollbar-width: thin;
+  line-height: 1.5;
+  /* solid paint so long copy never bleeds through property rows */
+  background: var(--color-bg-sidebar);
+  position: relative;
+  z-index: 0;
+}
+
+.jarvis-properties-scroll > .jarvis-property-card {
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg-sidebar);
+}
+
+.jarvis-inspector-loading {
+  display: grid;
+  width: var(--inspector-width, 400px);
+  min-width: 0;
+  place-items: center;
+  border-left: 1px solid var(--color-sidebar-border);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.jarvis-notebook-shell {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+.jarvis-notebook-main {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--color-sidebar-border);
+}
+
+.jarvis-notebook-main-header {
+  flex: 0 0 auto;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--color-sidebar-border);
+}
+
+.jarvis-notebook-main-header h1 {
+  margin: 2px 0 0;
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.jarvis-notebook-eyebrow {
+  color: var(--color-text-tertiary);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.jarvis-notebook-agent {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg-sidebar, #000);
+}
+
+.jarvis-notebook-preview {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 16px 18px 24px;
+  background: #0b0b0b;
+}
+
+.jarvis-notebook-header-actions,
+.jarvis-pane-toolbar,
+.jarvis-pane-toolbar > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jarvis-notebook-grid {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(360px, 1fr) minmax(280px, 360px);
+}
+
+.jarvis-file-tree,
+.jarvis-notebook-editor,
+.jarvis-notebook-agent,
+.jarvis-codex-pane {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.jarvis-notebook-editor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 0;
+}
+
+.jarvis-notebook-empty-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.jarvis-notebook-project-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 480px;
+}
+
+.jarvis-notebook-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.jarvis-notebook-textarea {
+  min-height: 0;
+  flex: 1;
+  resize: none;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 28px clamp(22px, 5vw, 72px) 80px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.75;
+  outline: none;
+}

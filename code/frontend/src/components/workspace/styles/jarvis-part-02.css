@@ -1,0 +1,299 @@
+
+.jarvis-prose {
+  max-width: none;
+  min-width: 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.jarvis-prose p {
+  margin: 0.65em 0;
+}
+
+.jarvis-prose p:first-child {
+  margin-top: 0;
+}
+
+.jarvis-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.jarvis-prose ul,
+.jarvis-prose ol {
+  margin: 0.65em 0;
+  padding-left: 1.45em;
+}
+
+.jarvis-prose li {
+  margin: 0.22em 0;
+}
+
+.jarvis-prose code {
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 5px;
+  background: #0f0f0f;
+  padding: 1px 5px;
+  color: var(--color-text-primary);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.jarvis-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: #0f0f0f;
+  padding: 10px 12px;
+  white-space: pre;
+}
+
+.jarvis-prose pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.88em;
+  white-space: pre;
+}
+
+.jarvis-prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.jarvis-prose img,
+.jarvis-prose video {
+  max-width: 100%;
+  height: auto;
+}
+
+.jarvis-thinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
+  max-width: 100%;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.jarvis-thinking-complete {
+  margin-top: 2px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.jarvis-thinking-shimmer {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: linear-gradient(90deg, var(--color-text-secondary) 35%, var(--color-text-primary) 50%, var(--color-text-secondary) 65%);
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: jarvis-shimmer 2.8s linear infinite;
+}
+
+.jarvis-thinking-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.jarvis-thinking-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-secondary);
+  animation: jarvis-dot 1s infinite ease-in-out;
+}
+
+.jarvis-thinking-dots span:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.jarvis-thinking-dots span:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+.jarvis-agent-composer-wrap {
+  border-top: 0;
+  padding: 8px 12px 14px;
+  /* Stay pinned to the bottom of the agent column; growth expands upward into the thread. */
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.jarvis-agent-composer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  /* Jarvis pattern: controls stay on the bottom row; textarea grows upward. */
+  align-items: end;
+  gap: 6px;
+  border: 0;
+  border-radius: 28px;
+  background: var(--color-bg-composer);
+  box-shadow: var(--shadow-composer);
+  padding: 6px 8px;
+  max-height: none;
+  min-height: 48px;
+}
+
+/* Plus / model menu column ? bottom-aligned with send/mic */
+.jarvis-agent-composer > .relative {
+  align-self: end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.jarvis-agent-input {
+  max-height: 120px;
+  min-height: 24px;
+  height: 24px;
+  width: 100%;
+  min-width: 0;
+  overflow-y: hidden;
+  resize: none;
+  border: 0;
+  align-self: end;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 15px;
+  line-height: 24px;
+  outline: none;
+  padding: 6px 2px 6px;
+  /* Avoid field-sizing: content ? expands empty state and fights JS resize. */
+  caret-color: var(--color-text-primary);
+  /* Hide scrollbar chrome; still scrollable when max height is hit. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.jarvis-agent-input::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.jarvis-agent-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.jarvis-agent-attachments {
+  display: flex;
+  gap: 8px;
+  padding: 0 4px 8px;
+}
+
+.jarvis-capability-action {
+  display: flex;
+  width: 100%;
+  min-height: 34px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 6px 7px;
+  font-size: 13px;
+}
+
+.jarvis-capability-action:hover:not(:disabled) {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-capability-action span:last-child {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.jarvis-capability-action:disabled {
+  opacity: 0.45;
+}
+
+.jarvis-notebook-agent .jarvis-agent-shell {
+  height: 100%;
+  min-height: 0;
+}
+
+.jarvis-agent-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-transform: none;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.jarvis-agent-status {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.jarvis-agent-status.ready {
+  color: #2ecf6f;
+}
+
+.jarvis-agent-status.error {
+  color: #ee7b7b;
+}
+
+/* Force monochrome white to match JarvisRawIcon / notebook rail color (currentColor). */
+.jarvis-agent-info-img,
+.jarvis-tab-icon-img,
+.jarvis-rail-icon-img {
+  display: block;
+  object-fit: contain;
+  /* Any glyph color ? pure white like the notebook SVG. */
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+/* Optical scale + stroke fatten (PNGs can't change real stroke-width). */
+.jarvis-rail-icon-img.rail-icon-workspace {
+  width: 22px; /* 20 * 1.1 */
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+/* Same left-sidebar panel glyph, mirrored so the thick rail sits on the right. */
+.jarvis-raw-icon.jarvis-panel-icon-rtl {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  transform: none;
+}
+
+/* Centered segmented tabs ? same 36px row as title + tools. */
+.jarvis-workspace-tabs-center {
+  grid-column: 2;
+  grid-row: 1;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-self: center;
+  gap: 2px;
+  height: 36px;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  min-width: 0;
+  box-sizing: border-box;
+}

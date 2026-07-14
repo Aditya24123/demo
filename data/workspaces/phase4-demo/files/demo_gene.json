@@ -1,0 +1,21 @@
+{
+  "material_id": "mp-zw",
+  "formula": "CdS",
+  "representation": "genetic_algorithm_chromosome",
+  "genes": {
+    "lattice_a": 4.14,
+    "lattice_b": 4.14,
+    "lattice_c": 6.72,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 120.0,
+    "fractional_coordinates": [
+      {"element": "Cd", "coords": [0.3333, 0.6667, 0.0000]},
+      {"element": "Cd", "coords": [0.6667, 0.3333, 0.5000]},
+      {"element": "S", "coords": [0.3333, 0.6667, 0.3750]},
+      {"element": "S", "coords": [0.6667, 0.3333, 0.8750]}
+    ]
+  },
+  "fitness_score": null,
+  "generation": 0
+}

@@ -1,0 +1,9 @@
+{
+  "name": "catalyst-codex-service",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@openai/codex-sdk": "0.144.4"
+  }
+}

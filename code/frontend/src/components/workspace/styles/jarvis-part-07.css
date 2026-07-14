@@ -1,0 +1,332 @@
+
+.jarvis-notebook-error {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 10;
+  max-width: min(420px, calc(100vw - 40px));
+  border: 1px solid rgba(239, 68, 68, 0.36);
+  border-radius: 8px;
+  background: #231313;
+  color: #ffb4b4;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+.jarvis-notebook-empty {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  place-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.jarvis-notebook-empty h1 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.jarvis-notebook-empty p {
+  margin: 0;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+}
+
+textarea {
+  resize: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-input-scrollbar) transparent;
+}
+
+textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: var(--color-input-scrollbar);
+  border-radius: 9999px;
+}
+
+.jarvis-brand {
+  display: inline-flex;
+  min-width: 0;
+  height: 36px;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0;
+  padding: 0 9px;
+}
+
+.jarvis-collapsed-brand {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.jarvis-collapsed-brand:hover {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-pinned-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jarvis-section-label-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 2px;
+  min-height: 32px;
+  padding-right: 4px;
+}
+
+.jarvis-section-label {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 20px;
+  padding: 0 8px 0 12px;
+  text-align: left;
+}
+
+button.jarvis-section-label {
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+button.jarvis-section-label:hover {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-section-chevron {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: transform 140ms ease;
+}
+
+.jarvis-section-chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
+.jarvis-section-chevron .jarvis-raw-icon,
+.jarvis-section-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+.jarvis-section-label-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.jarvis-section-action {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.jarvis-section-action:hover {
+  background: var(--color-sidebar-hover-open);
+  color: var(--color-text-primary);
+}
+
+.jarvis-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jarvis-section-body.collapsed {
+  display: none;
+}
+
+.jarvis-project-row,
+.jarvis-recent-row {
+  color: var(--color-text-secondary);
+}
+
+.jarvis-project-row.active {
+  color: var(--color-text-primary);
+}
+
+.jarvis-project-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.jarvis-project-row.active .jarvis-project-dot {
+  border-color: transparent;
+  background: var(--jarvis-blue);
+}
+
+.jarvis-project-state {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.jarvis-project-state-error {
+  align-items: flex-start;
+  flex-direction: column;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.jarvis-project-state button {
+  border: 0;
+  background: transparent;
+  color: var(--jarvis-blue);
+  font-size: 13px;
+  padding: 0;
+}
+
+.jarvis-row-badge {
+  margin-left: auto;
+  min-width: 22px;
+  height: 20px;
+  border-radius: 7px;
+  background: #212121;
+  color: var(--color-text-primary);
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.jarvis-footer-actions {
+  padding-bottom: 8px;
+}
+
+.jarvis-user-row {
+  display: flex;
+  width: 100%;
+  height: 52px;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 7px 9px;
+  text-align: left;
+}
+
+.jarvis-menu-divider {
+  height: 1px;
+  margin: 5px 8px;
+  background: var(--color-sidebar-border);
+}
+
+.jarvis-avatar {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #303030;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.jarvis-avatar-collapsed {
+  border: 0;
+}
+
+.jarvis-collapsed-profile {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0;
+}
+
+.jarvis-collapsed-profile:hover {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-right-panel {
+  display: flex;
+  min-height: 0;
+  width: var(--inspector-width);
+  flex: 0 0 var(--inspector-width);
+  flex-direction: column;
+  background: var(--color-bg-sidebar);
+  color: var(--color-text-primary);
+  border-left: 1px solid var(--color-sidebar-border);
+}
+
+.jarvis-right-topbar {
+  display: flex;
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  padding: 0 12px;
+}
+
+.jarvis-right-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}

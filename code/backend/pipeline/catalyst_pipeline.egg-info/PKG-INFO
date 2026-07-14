@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: catalyst-pipeline
+Version: 0.1.0
+Requires-Python: >=3.11
+Requires-Dist: mp-api>=0.46.0
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pandas>=2.0
+Requires-Dist: pyarrow>=15.0
+Requires-Dist: duckdb>=1.0
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn>=0.29
+Requires-Dist: websockets>=12.0
+Requires-Dist: pymatgen>=2024.1.1
+Requires-Dist: tqdm>=4.66

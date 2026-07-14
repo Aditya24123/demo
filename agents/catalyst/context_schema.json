@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "description": "Maps UI/session fields into compact RunContext for the Catalyst agent.",
+  "max_recent_turns": 8,
+  "max_visible_materials": 16,
+  "fields": {
+    "surface": { "from": ["agent_surface", "rail_mode"], "required": true },
+    "viewport.material_id": { "from": ["material_id", "resolved_material_id"] },
+    "viewport.formula_pretty": { "from": ["formula_pretty", "title"] },
+    "viewport.chemsys": { "from": ["chemsys", "subtitle"] },
+    "viewport.tab": { "from": ["workspace_tab"] },
+    "viewport.hop_depth": { "from": ["hop_depth"] },
+    "viewport.genome": { "from": ["genome_visible_start", "genome_visible_end", "genome_selected_position", "genome_sequence", "genome_total_length", "genome_selected_variant"] },
+    "project.id": { "from": ["project_id"] },
+    "project.name": { "from": ["project_name"] },
+    "selection.visible_material_ids": { "from": ["visible_material_ids"] },
+    "selection.selected_edge_id": { "from": ["selected_edge_id"] }
+  },
+  "capabilities_defaults": {
+    "local_materials": true,
+    "codex": true,
+    "web_search": false,
+    "research_literature": false
+  }
+}

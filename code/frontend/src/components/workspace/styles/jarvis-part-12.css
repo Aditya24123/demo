@@ -1,0 +1,51 @@
+
+.jarvis-status-pill {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(28, 137, 64, 0.18);
+  color: #2ecf6f;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 12px;
+}
+
+.jarvis-runtime-status {
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+}
+
+.jarvis-runtime-status::before {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #6f6f6f;
+  content: '';
+  vertical-align: 1px;
+}
+
+.jarvis-runtime-status.online::before {
+  background: #20a85b;
+}
+
+.jarvis-save-status {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  opacity: 0.85;
+}
+
+.jarvis-save-status.saving {
+  opacity: 1;
+}
+
+.jarvis-save-status.error {
+  outline: 1px solid rgba(238, 123, 123, 0.45);
+}

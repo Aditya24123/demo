@@ -1,0 +1,292 @@
+
+.jarvis-workspace-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding-right: 2px;
+  border-right: 1px solid var(--color-sidebar-border);
+  margin-right: 0;
+  padding-right: 12px;
+}
+
+.jarvis-workspace-button,
+.jarvis-workspace-select {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 0 11px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.jarvis-workspace-button:hover,
+.jarvis-workspace-select:hover,
+.jarvis-workspace-button.active {
+  background: var(--color-sidebar-hover-open);
+}
+
+.jarvis-workspace-tabs {
+  display: flex;
+  min-height: 38px;
+  align-items: flex-end;
+  gap: 22px;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  margin-bottom: 12px;
+}
+
+.jarvis-workspace-tab {
+  height: 38px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding: 0 1px;
+  font-size: 14px;
+}
+
+.jarvis-workspace-tab.active {
+  border-bottom-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+
+.jarvis-workspace-stage {
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 8px;
+  background: #0b0b0b;
+}
+
+@media (max-width: 900px) {
+  .jarvis-material-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    row-gap: 8px;
+  }
+
+  .jarvis-material-title-row {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .jarvis-material-header-right {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .jarvis-workspace-tabs-center {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    justify-content: center;
+  }
+
+  .jarvis-material-id {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .jarvis-material-canvas {
+    padding: 10px 12px 12px;
+  }
+
+  .jarvis-material-title {
+    max-width: 100%;
+  }
+
+  .jarvis-workspace-actions {
+    justify-content: flex-start;
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .jarvis-key-properties-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1180px) {
+  .jarvis-home-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .jarvis-right-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    width: min(var(--inspector-width), calc(100vw - 70px));
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.28);
+  }
+}
+
+@media (max-width: 900px) {
+  .jarvis-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    border: 0;
+    background: rgba(0, 0, 0, 0.46);
+  }
+
+  .jarvis-sidebar-expanded {
+    position: fixed;
+    z-index: 60;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .jarvis-sidebar-collapsed {
+    position: relative;
+    z-index: 50;
+  }
+}
+
+@keyframes jarvis-soft-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .jarvis-notebook-grid {
+    grid-template-columns: 180px minmax(320px, 1fr);
+  }
+
+  .jarvis-codex-pane {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .jarvis-notebook-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jarvis-file-tree {
+    display: none;
+  }
+}
+
+.jarvis-tab-icon-img {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.jarvis-properties-sticky .jarvis-property-tabs {
+  margin-bottom: 0;
+}
+
+.jarvis-property-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.jarvis-property-card + .jarvis-property-card {
+  margin-top: 14px;
+}
+
+.jarvis-property-tabs {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  border: 0;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin: 14px 0;
+}
+
+.jarvis-property-tab {
+  flex: 0 0 auto;
+  height: 34px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.jarvis-property-tab.active {
+  border-bottom-color: var(--color-text-primary);
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+.jarvis-home-grid {
+  min-width: 0;
+}
+
+.jarvis-material-canvas {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  background: var(--color-bg-main);
+  /* Tighter top chrome so the stage sits higher. */
+  padding: 10px 16px 12px;
+}
+
+.jarvis-material-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-rows: 36px auto;
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 2px;
+  margin-bottom: 6px;
+}
+
+.jarvis-material-title-row {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+}
+
+.jarvis-material-id {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 0;
+  color: var(--color-text-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.jarvis-material-header-right {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  height: 36px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
