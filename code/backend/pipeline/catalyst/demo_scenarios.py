@@ -284,9 +284,7 @@ def iter_demo_events(
         }
         if step.narration_delay_seconds:
             yield from wait_until(step.at_seconds + step.narration_delay_seconds, "Catalyst is composing the next explanation…")
-        narration_at = step.at_seconds + step.narration_delay_seconds
-        timestamp = f"{int(narration_at) // 60:02d}:{int(narration_at) % 60:02d}"
-        for chunk in _chunks(f"> **{timestamp} · Catalyst**\n\n{step.narration}" if step.narration else ""):
+        for chunk in _chunks(step.narration):
             yield {"type": "token", "text": chunk}
             if scale > 0:
                 time.sleep(0.055 * scale)
