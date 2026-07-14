@@ -4,11 +4,11 @@
 
 ## 🎬 Featured demo
 
-## 🎥 [Watch the full-quality Catalyst demo with audio](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
+## 🎥 [Watch the full-quality Catalyst demo with audio on YouTube](https://youtu.be/yZntqfwqbaE)
 
-[![Catalyst demo preview](./catalyst-demo-preview.gif)](https://github.com/Aditya24123/demo/releases/download/catalyst-demo-2026-07-14/catalyst-demo.mp4)
+[![Catalyst demo preview](./catalyst-demo-preview.gif)](https://youtu.be/yZntqfwqbaE)
 
-*Inline preview above · click for the full audio-enabled recording.*
+*Inline preview above · click to watch the full audio-enabled recording on YouTube.*
 
 Catalyst turns dense scientific records into an interactive investigation. It combines material discovery tools—3D crystal structures, spectra, properties, and evidence graphs—with a context-aware genomics explorer that understands the DNA window currently on screen.
 
