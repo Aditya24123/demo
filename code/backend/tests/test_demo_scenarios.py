@@ -25,7 +25,7 @@ def test_trigger_normalization_is_exact_and_intentional() -> None:
 
 
 def test_scenario_duration_and_action_order() -> None:
-    assert 150 <= SUNLIGHT_SCENARIO.duration_seconds <= 165
+    assert 80 <= SUNLIGHT_SCENARIO.duration_seconds <= 95
     actions = ordered_action_types(SUNLIGHT_SCENARIO)
     expected = [
         "demo_start",

@@ -39,7 +39,10 @@ function AnimatedPair({ pair, index, total, selected, bases, onSelect, animation
     const remaining = 1 - progress;
     const offset = entryOffsets[fragment]; const rotation = entryRotations[fragment];
     ref.current.position.set(offset[0] * remaining, offset[1] * remaining, offset[2] * remaining);
-    ref.current.rotation.set(rotation[0] * remaining, rotation[1] * remaining, rotation[2] * remaining);
+    // Each entering fragment makes a short, visible turn before it locks into the helix.
+    // The spin fades to zero so the final model remains inspectable by the user.
+    const spin = assembling ? (Date.now() - (animation?.startedAt || Date.now())) / 1000 * (1.9 + fragment * 0.25) * remaining : 0;
+    ref.current.rotation.set(rotation[0] * remaining + spin, rotation[1] * remaining - spin * 0.7, rotation[2] * remaining + spin * 0.45);
   });
   const [leftBase, rightBase] = bases || ['A', 'T'];
   const rungColor = selected ? '#fb7185' : '#64748b';
@@ -55,7 +58,7 @@ function SequenceWindow({ basePairs, selectedIndex, onSelect, demoAnimation }: O
   const [connected, setConnected] = useState(demoAnimation?.phase !== 'assemble');
   useEffect(() => { setConnected(demoAnimation?.phase !== 'assemble'); }, [demoAnimation?.nonce, demoAnimation?.phase]);
   useFrame(() => {
-    if (demoAnimation?.phase === 'assemble' && !connected && Date.now() - demoAnimation.startedAt >= demoAnimation.durationMs * 0.74) setConnected(true);
+    if (demoAnimation?.phase === 'assemble' && !connected && Date.now() - demoAnimation.startedAt >= demoAnimation.durationMs * 0.56) setConnected(true);
   });
   return <group>
     {connected && <><Line points={positions.map((pair) => pair.left)} color="#5eead4" lineWidth={3.2} transparent opacity={0.96} /><Line points={positions.map((pair) => pair.right)} color="#93c5fd" lineWidth={3.2} transparent opacity={0.96} /><WireBox depth={Math.max(4.8, basePairs.length * 0.34 + 0.8)} /></>}
@@ -76,6 +79,21 @@ function DemoDnaCamera({ animation, selectedIndex, total, controlsRef }: { anima
     if (controlsRef.current) startTarget.current.copy(controlsRef.current.target);
   }, [animation?.nonce, animation?.phase, camera, controlsRef]);
   useFrame(() => {
+    if (animation?.phase === 'assemble') {
+      const elapsed = Math.max(0, Date.now() - animation.startedAt);
+      const progress = smooth(elapsed / animation.durationMs);
+      const z = (selectedIndex - (total - 1) / 2) * 0.31;
+      // A compact orbital pass makes the assembly read as a real 3D object instead
+      // of a flat diagram, then hands control back to the focused variant camera.
+      const angle = 0.4 + elapsed / animation.durationMs * Math.PI * 1.45;
+      const desired = new Vector3(Math.cos(angle) * 7.4, 2.8 + Math.sin(angle * 1.4) * 2.4, z + Math.sin(angle) * 6.8);
+      camera.position.lerp(desired, Math.min(0.15, 0.035 + progress * 0.07));
+      if (controlsRef.current) {
+        controlsRef.current.target.lerp(new Vector3(0, 0, z), 0.08);
+        controlsRef.current.update();
+      }
+      return;
+    }
     if (animation?.phase !== 'focus') return;
     const t = smooth((Date.now() - animation.startedAt) / animation.durationMs);
     const z = (selectedIndex - (total - 1) / 2) * 0.31;

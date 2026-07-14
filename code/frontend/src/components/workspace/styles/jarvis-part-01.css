@@ -274,6 +274,25 @@
 .jarvis-message-assistant {
   align-self: stretch;
   color: var(--color-text-primary);
+  padding: 2px 0 8px;
+}
+
+.jarvis-agent-message-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  color: #8ad9ef;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.jarvis-agent-message-meta time {
+  color: #718096;
+  font-weight: 500;
+  letter-spacing: .02em;
 }
 
 .jarvis-message-error {

@@ -66,7 +66,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
   const { currentSessionId, sessions, renameSession } = useCatalystSessions();
   const activeSession = sessions.find((session) => session.id === currentSessionId) || null;
   const activeProject = projects.find((project) => project.projectId === activeProjectId) || null;
-  // Phase 5: surface follows the live rail ? one copilot, shared context.
+  // Phase 5: surface follows the live rail — one copilot, shared context.
   const agentSurface: AgentSurface = agentSurfaceFromRail(railMode);
   const starters = agentSurface === 'project' ? PROJECT_STARTERS : agentSurface === 'genes' ? GENES_STARTERS : MATERIALS_STARTERS;
   const [editingTitle, setEditingTitle] = useState(false);
@@ -85,14 +85,14 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
     [messages],
   );
 
-  /** Live activity line: Thinking ? tool status ? latest markdown heading while tokens stream. */
+  /** Live activity line: Thinking → tool status → latest markdown heading while tokens stream. */
   const activityLabel = useMemo(() => {
     // Voice live: shimmer for connect / think / tools (not chat text dumps)
     if (voiceState.isActive) {
-      if (voiceState.isConnecting) return 'Connecting?';
+      if (voiceState.isConnecting) return 'Connecting…';
       if (voiceState.activity) return voiceState.activity;
-      if (voiceState.isThinking) return 'Thinking?';
-      // Speaking with transcript already visible ? no shimmer
+      if (voiceState.isThinking) return 'Thinking…';
+      // Speaking with transcript already visible — no shimmer
       if (voiceState.isSpeaking) return null;
       return null;
     }
@@ -103,10 +103,10 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
     if (streamed.trim()) {
       if (heading) return heading;
       if (activity && !/^thinking/i.test(activity)) return activity;
-      return 'Writing?';
+      return 'Writing…';
     }
     if (activity) return activity;
-    return 'Thinking?';
+    return 'Thinking…';
   }, [
     activity,
     isRunning,
@@ -148,7 +148,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
     if (mode === 'provider_backed') bits.push('Active');
     else bits.push('Local fallback');
     if (modelCapability?.label) bits.push(modelCapability.label);
-    return bits.join(' ? ');
+    return bits.join(' · ');
   }, [activeProject?.name, activeProjectId, agentSurface, genomicsCaseId, genomicsRepeatCount, mode, modelCapability?.label, workspace?.title]);
 
   useEffect(() => {
@@ -177,7 +177,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
 
   function resizeComposer(element: HTMLTextAreaElement, value: string) {
     // Measure natural height, then clamp. align-items:end keeps +/send on the bottom
-    // so growth is visual ?from the top? (into the message list).
+    // so growth is visual “from the top” (into the message list).
     element.style.height = '0px';
     element.style.overflowY = 'hidden';
     if (!value) {
@@ -207,7 +207,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
     const pendingAttachments = attachments;
     setAttachments([]);
     if (inputRef.current) resizeComposer(inputRef.current, '');
-    // Single session agent path ? materials + project tools share context.
+    // Single session agent path — materials + project tools share context.
     await sendMessage(text, pendingAttachments);
   }
 
@@ -293,7 +293,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
       await startVoiceSession();
       return;
     }
-    // End / Cancel ? hard stop mic + screen + socket
+    // End / Cancel — hard stop mic + screen + socket
     await endVoiceSession();
   }
 
@@ -319,7 +319,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
       stopDictation();
       return;
     }
-    // Dictation is local STT only ? never leave Live voice half-open.
+    // Dictation is local STT only — never leave Live voice half-open.
     if (voiceState.isActive) {
       void endVoiceSession();
     }
@@ -330,7 +330,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
     }
     setComposerError(null);
     const recognition = new Recognition();
-    // Continuous until user stops ? better for research prompts.
+    // Continuous until user stops — better for research prompts.
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = navigator.language || 'en-US';
@@ -483,7 +483,8 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
           <div className="jarvis-message-stack">
             {mergedMessages.map((msg) => {
               const role = msg.role === 'user' ? 'user' : msg.role === 'assistant' ? 'assistant' : 'error';
-              // Hide empty streaming placeholder ? ActivityLine covers the wait state.
+              const messageTimestamp = 'timestamp' in msg && typeof msg.timestamp === 'number' ? msg.timestamp : Date.now();
+              // Hide empty streaming placeholder — ActivityLine covers the wait state.
               if (role === 'assistant' && isRunning && msg.id === latestAssistantId && !(msg.text || '').trim()) {
                 return null;
               }
@@ -491,10 +492,16 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
                 <Fragment key={msg.id}>
                   <article className={`jarvis-message jarvis-message-${role}`}>
                     {role === 'assistant' || role === 'error' ? (
-                      <div className="jarvis-prose">
-                        <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
-                          {msg.text || ''}
-                        </ReactMarkdown>
+                      <div>
+                        <div className="jarvis-agent-message-meta">
+                          <span>{role === 'assistant' ? 'Catalyst' : 'System'}</span>
+                          <time dateTime={new Date(messageTimestamp).toISOString()}>{new Date(messageTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</time>
+                        </div>
+                        <div className="jarvis-prose">
+                          <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
+                            {msg.text || ''}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     ) : (
                       <div className="jarvis-message-text">{msg.text}</div>
@@ -655,7 +662,7 @@ export function AgentChatBody({ compact = false, showInput = true }: { compact?:
                 <>
                   <span>
                     {voiceStatusLabel(voiceState)}
-                    {voiceState.screenActive ? ' ? Screen shared' : ''}
+                    {voiceState.screenActive ? ' · Screen shared' : ''}
                   </span>
                   <strong>{formatDuration(voiceElapsedMs)}</strong>
                 </>
