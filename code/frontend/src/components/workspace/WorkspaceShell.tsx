@@ -23,7 +23,7 @@ import { GenesMode } from './modes/GenesMode';
 import { SettingsMode } from './modes/SettingsMode';
 import { type HomeTab, type RailMode } from './types';
 import { detailCacheKey, hopLimitNodes } from './utils';
-import { DemoMissionProgress } from './DemoMissionProgress';
+import { DemoNarrationAudio } from './DemoNarrationAudio';
 
 const GraphMode = lazy(() => import('./modes/GraphMode').then((module) => ({ default: module.GraphMode })));
 const NotebookMode = lazy(() => import('./modes/NotebookMode').then((module) => ({ default: module.NotebookMode })));
@@ -137,7 +137,7 @@ export function WorkspaceShell() {
 
   return (
     <div className="relative flex h-dvh w-screen overflow-hidden" style={{ background: 'var(--cat-bg)', color: 'var(--cat-text-1)' }}>
-      <DemoMissionProgress />
+      <DemoNarrationAudio />
       <WorkspaceRail mode={railMode as RailMode} setMode={setRailMode as (mode: RailMode) => void} />
 
       <div className="relative flex min-w-0 flex-1 overflow-hidden">
