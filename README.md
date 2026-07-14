@@ -1,14 +1,45 @@
 # Catalyst
 
-AI-native **materials discovery workspace**: go from a natural-language requirement to screened candidates, graph context, structure inspection, and agent-driven research ? all against a local Materials Project?class snapshot.
+> **An AI-native scientific workspace that connects materials, evidence, and genomics in one guided investigation.**
 
+## 🎬 Featured demo
 
-## What it does
+### [▶ Watch the Catalyst demo](./catalyst-demo.mp4)
+
+Catalyst turns dense scientific records into an interactive investigation. It combines material discovery tools—3D crystal structures, spectra, properties, and evidence graphs—with a context-aware genomics explorer that understands the DNA window currently on screen.
+
+### From Sunscreen to DNA
+
+Our guided demo follows one clear scientific story:
+
+1. Open zinc oxide (ZnO), a UV-blocking sunscreen material.
+2. Watch stored atomic coordinates assemble into its 3D crystal structure.
+3. Follow a two-hop evidence graph and a cached optical-response spectrum.
+4. Transition to BRCA1, assemble a bounded DNA helix, and focus a displayed variant.
+5. Finish with a concise Sunlight Protection Science Brief.
+
+Catalyst acts like a capable scientific copilot: it narrates the investigation, drives the interface step by step, and stays grounded in the active material or genomic context.
+
+## Why Catalyst stands out
+
+- **One coherent scientific workspace.** Materials exploration and genomics become one visual flow rather than disconnected tools.
+- **Grounded, inspectable AI.** The agent works from the selected material, graph neighborhood, structure payload, and visible genome state.
+- **Built for understanding.** Interactive 3D structure, graph navigation, spectra, sequence windows, and narrated actions make scientific data tangible.
+- **Fast and resilient for live demos.** The flagship experience uses deterministic local data and cached visual payloads, avoiding dependence on a remote model or external materials API.
+- **Future-ready architecture.** The genome-state model can support TP53, EGFR, CFTR, and additional genes without changing the integration pattern.
+
+## Core platform
+
+AI-native **materials discovery workspace**: go from a natural-language requirement to screened candidates, graph context, structure inspection, and agent-driven research — all against a local Materials Project–class snapshot.
+
+This repository is the public product source: [github.com/Aditya24123/demo](https://github.com/Aditya24123/demo).
+
+### What it does
 
 - **Screen** a local processed Materials Project snapshot with natural language and structured filters.
 - **Explore** material neighborhoods on a force graph with edges, evidence, and candidate sets.
 - **Inspect** crystal structures (3D), thermo/electronic/magnetic/mechanical properties, spectra when present, and provenance.
-- **Work in projects** ? named workspaces with sessions, notebook entries, files, and runs (FastAPI project API + UI shell).
+- **Work in projects** — named workspaces with sessions, notebook entries, files, and runs (FastAPI project API + UI shell).
 - **Chat with an agent** that calls grounded backend tools (search, screen, open materials, compare, export) rather than free-form invention.
 - **Research mode** (optional) for literature-style queries and ingest when provider/source keys are configured.
 - **Voice** live path over WebSocket when a voice-capable provider is configured.
@@ -17,18 +48,18 @@ AI-native **materials discovery workspace**: go from a natural-language requirem
 
 ```text
 browser / Vite UI
-  ? FastAPI (local_api) on :8766
-  ? DuckDB + parquet/jsonl processed snapshot
-  ? agent loop + provider adapters (Gemini, Groq, Mistral, NVIDIA, Ollama, ?)
+  → FastAPI (local_api) on :8766
+  → DuckDB + parquet/jsonl processed snapshot
+  → agent loop + provider adapters (Gemini, Groq, Mistral, NVIDIA, Ollama, …)
 ```
 
 | Path | Role |
 |------|------|
-| `code/frontend/` | React 19 + Vite workspace UI (`App` ? `SubmissionShell` ? `WorkspaceShell`) |
+| `code/frontend/` | React 19 + Vite workspace UI (`App` → `SubmissionShell` → `WorkspaceShell`) |
 | `code/backend/pipeline/catalyst/` | FastAPI app, local store, screening, graph, projects, agent tools, voice |
 | `code/backend/codex-service/` | Optional Node Codex runner for project workspace runs |
 | `code/backend/tests/` | Backend contract and recovery tests |
-| `data/processed/catalyst/v2025.09.25/` | **Not in git** ? place the processed snapshot here to run fully offline |
+| `data/processed/catalyst/v2025.09.25/` | **Not in git** — place the processed snapshot here to run fully offline |
 | `data/local/` | Runtime state (sessions, logs, exports); only examples/templates committed |
 | `docs/` | Runbook, API contract, deployment, demo prompts |
 | `scripts/` | CLI helpers (e.g. Pages runtime-config updater) |
@@ -77,7 +108,7 @@ export CATALYST_REPO_ROOT=$(pwd)                # PowerShell: $env:CATALYST_REPO
 python -m catalyst.local_api
 ```
 
-Health check: `http://127.0.0.1:8766/health` ? `{"status":"ok", ...}`.
+Health check: `http://127.0.0.1:8766/health` → `{"status":"ok", ...}`.
 
 ### 3. Frontend
 
@@ -106,9 +137,9 @@ If `code/frontend/public/runtime-config.json` sets a non-empty `apiBaseUrl`, the
 | Item | Notes |
 |------|--------|
 | `data/local/settings.example.json` | Shape for runtime settings; copy/adapt to `data/local/settings.json` (gitignored) |
-| `.env.example` | Provider and research keys (`GEMINI_API_KEY`, `GROQ_API_KEY`, ?) ? never commit real `.env` |
+| `.env.example` | Provider and research keys (`GEMINI_API_KEY`, `GROQ_API_KEY`, …) — never commit real `.env` |
 | `runtime.source_release` | Defaults to `v2025.09.25` |
-| `code/frontend/public/runtime-config.json` | Optional `{ "apiBaseUrl": "https://?" }` for a hosted backend |
+| `code/frontend/public/runtime-config.json` | Optional `{ "apiBaseUrl": "https://…" }` for a hosted backend |
 
 ## Verification
 
