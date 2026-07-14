@@ -20,13 +20,13 @@ from catalyst.agent.helpers import (
 )
 from catalyst.agent.package import build_system_instruction, maybe_write_turn_trace
 from catalyst.agent.tool_exec import _assistant_response, _compact_tool_result, _execute_tool
-from catalyst.agent.tools_decl import TOOL_DECLARATIONS
+from catalyst.agent.tools_decl import MODEL_TOOL_DECLARATIONS
 
 EventCallback = Any
 
 # Tools exposed to Antigravity. Full registry minus nothing critical; shell is allowlisted.
 # Exclude nothing from CORE ? P2 uses almost all decls; skip only if empty name.
-CORE_TOOL_NAMES: set[str] | None = None  # None => all TOOL_DECLARATIONS
+CORE_TOOL_NAMES: set[str] | None = None  # None => all provider-visible declarations
 
 DEFAULT_AGENT = "antigravity-preview-05-2026"
 MAX_TOOL_ROUNDS = 8
@@ -78,7 +78,7 @@ def _agent_name() -> str:
 def _tools_payload() -> list[dict[str, Any]]:
     tools: list[dict[str, Any]] = []
     allowed = CORE_TOOL_NAMES
-    for decl in TOOL_DECLARATIONS:
+    for decl in MODEL_TOOL_DECLARATIONS:
         name = str(decl.get("name") or "")
         if not name:
             continue
@@ -515,8 +515,8 @@ def _run_agy_cli_tool_loop(
     display = display_model_label(profile, effort)
     _emit(event_cb, {"type": "status", "text": f"Agent ? {display}?"})
 
-    allowed = known_tool_names(TOOL_DECLARATIONS)
-    protocol = build_tool_protocol_block(TOOL_DECLARATIONS)
+    allowed = known_tool_names(MODEL_TOOL_DECLARATIONS)
+    protocol = build_tool_protocol_block(MODEL_TOOL_DECLARATIONS)
     prompt = f"{user_blob}\n\n{protocol}\n\nUser request again for focus:\n{message}"
     cont = False
     final_text = ""
@@ -564,4 +564,3 @@ def _run_agy_cli_tool_loop(
         )
 
     return final_text or None
-

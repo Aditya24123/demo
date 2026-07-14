@@ -21,7 +21,7 @@ from catalyst.agent.helpers import (
 )
 from catalyst.agent.package import build_system_instruction, maybe_write_turn_trace
 from catalyst.agent.tool_exec import _assistant_response, _compact_tool_result, _execute_tool
-from catalyst.agent.tools_decl import TOOL_DECLARATIONS
+from catalyst.agent.tools_decl import MODEL_TOOL_DECLARATIONS
 from catalyst.providers.gemini import GeminiProviderError, generate_gemini_agent_turn
 from catalyst.providers.openai_compatible import (
     OpenAICompatibleProviderError,
@@ -151,7 +151,7 @@ def _run_native_gemini_loop(
     attachment_parts = _gemini_attachment_parts(attachments or [])
     if attachment_parts and contents and contents[-1].get("role") == "user":
         contents[-1].setdefault("parts", []).extend(attachment_parts)
-    tools = [{"functionDeclarations": TOOL_DECLARATIONS}]
+    tools = [{"functionDeclarations": MODEL_TOOL_DECLARATIONS}]
     aggregate = _empty_aggregate()
     model_content: dict[str, Any] | None = None
 

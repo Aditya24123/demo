@@ -305,8 +305,10 @@ export const api = {
     handlers: {
       onStatus?: (text: string) => void;
       onToken?: (text: string) => void;
+      onCheckpoint?: (actions: Array<Record<string, unknown>>, actionId?: string, checkpoint?: string) => void | Promise<void>;
       onDone?: (response: any) => void;
       onError?: (message: string) => void;
+      signal?: AbortSignal;
     } = {},
   ) => {
     const apiBase = await getApiBase();
@@ -314,6 +316,7 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'text/event-stream' },
       body: JSON.stringify(body),
+      signal: handlers.signal,
     });
     if (!res.ok || !res.body) {
       let detail = res.statusText;
@@ -350,6 +353,9 @@ export const api = {
         }
         if (event.type === 'status' && event.text) handlers.onStatus?.(String(event.text));
         else if (event.type === 'token' && event.text) handlers.onToken?.(String(event.text));
+        else if (event.type === 'checkpoint' && Array.isArray(event.ui_actions)) {
+          await handlers.onCheckpoint?.(event.ui_actions, event.action_id, event.checkpoint);
+        }
         else if (event.type === 'done') handlers.onDone?.(event.response || event);
         else if (event.type === 'error') handlers.onError?.(String(event.message || 'Stream failed'));
       }

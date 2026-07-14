@@ -19,6 +19,7 @@ export type LayoutApi = {
   setGenomeSelection?: (position: number) => void;
   setGenomeViewport?: (start: number, end: number) => void;
   setGenomeSequenceVisible?: (visible: boolean) => void;
+  applyDemoAction?: (action: Record<string, unknown>) => void;
   setInspectorOpen: (open: boolean) => void;
   setInspectorTab: (tab: 'overview' | 'properties' | 'evidence' | 'agent') => void;
   /** Legacy sheet API ? kept only for non-workspace sheets if needed. */
@@ -136,6 +137,17 @@ export async function applyUiActions(
       ) {
         deps.layout.setRailMode(mode);
       }
+      continue;
+    }
+    if (type === 'set_inspector') {
+      deps.layout.setInspectorOpen(Boolean(action.open));
+      if (action.tab === 'overview' || action.tab === 'properties' || action.tab === 'evidence' || action.tab === 'agent') {
+        deps.layout.setInspectorTab(action.tab);
+      }
+      continue;
+    }
+    if (type.startsWith('demo_')) {
+      deps.layout.applyDemoAction?.(action);
       continue;
     }
     if (

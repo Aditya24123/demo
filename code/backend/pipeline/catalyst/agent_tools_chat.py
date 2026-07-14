@@ -8,7 +8,10 @@ import os
 
 from catalyst.agent.antigravity_core import antigravity_core_available, run_antigravity_agent_loop
 from catalyst.agent.codex_core import codex_core_available, run_codex_agent_loop
+from catalyst.agent.helpers import _empty_aggregate
+from catalyst.agent.tool_exec import _assistant_response, _execute_tool
 from catalyst.agent_loop import run_llm_agent_loop, run_local_agent_fallback
+from catalyst.demo_scenarios import DemoScenario, iter_demo_events, scenario_for_prompt
 from catalyst.session_store import compact_session_context
 
 
@@ -35,6 +38,56 @@ def _merge_live_workspace_context(
     return workspace_context
 
 
+def _prepare_demo_session(
+    controller: Any,
+    *,
+    session_id: str,
+    message: str,
+    current_workspace: dict[str, Any] | None,
+) -> tuple[str, dict[str, Any]]:
+    session = controller.sessions.get_session(session_id) or controller.sessions.create_session(context=current_workspace or {})
+    session_id = session["session_id"]
+    if current_workspace:
+        merged = _merge_live_workspace_context(session.get("context") or {}, current_workspace)
+        controller.sessions.update_session(session_id, {"context": merged})
+    controller.sessions.append_message(session_id, "user", message)
+    aggregate = _empty_aggregate()
+    _execute_tool(
+        controller,
+        session_id,
+        "run_demo_scenario",
+        {"scenario_id": "sunlight-dna"},
+        aggregate,
+    )
+    return session_id, aggregate
+
+
+def _demo_response(
+    controller: Any,
+    *,
+    scenario: DemoScenario,
+    session_id: str,
+    message: str,
+    current_workspace: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Non-stream compatibility path; the web client uses timed SSE playback."""
+    session_id, aggregate = _prepare_demo_session(
+        controller,
+        session_id=session_id,
+        message=message,
+        current_workspace=current_workspace,
+    )
+    return _assistant_response(
+        controller,
+        session_id=session_id,
+        text=scenario.final_brief,
+        aggregate=aggregate,
+        current_workspace=current_workspace,
+        confidence="grounded",
+        provider={"provider": "cached_demo", "model": scenario.scenario_id},
+    )
+
+
 class AgentToolsChatMixin:
     def local_chat(
         self,
@@ -44,6 +97,15 @@ class AgentToolsChatMixin:
         current_workspace: dict[str, Any] | None = None,
         attachments: list[dict[str, Any]] | None = None,
     ) -> dict[str, Any]:
+        scenario = scenario_for_prompt(message)
+        if scenario:
+            return _demo_response(
+                self,
+                scenario=scenario,
+                session_id=session_id,
+                message=message,
+                current_workspace=current_workspace,
+            )
         session = self.sessions.get_session(session_id) or self.sessions.create_session(context=current_workspace or {})
         if session["session_id"] != session_id:
             session_id = session["session_id"]
@@ -143,6 +205,32 @@ class AgentToolsChatMixin:
         attachments: list[dict[str, Any]] | None = None,
     ):
         """Yield SSE-friendly event dicts: status / token / done / error."""
+        scenario = scenario_for_prompt(message)
+        if scenario:
+            sid, aggregate = _prepare_demo_session(
+                self,
+                session_id=session_id,
+                message=message,
+                current_workspace=current_workspace,
+            )
+            try:
+                for event in iter_demo_events(scenario):
+                    yield event
+                response = _assistant_response(
+                    self,
+                    session_id=sid,
+                    text=scenario.final_brief,
+                    aggregate=aggregate,
+                    current_workspace=current_workspace,
+                    confidence="grounded",
+                    provider={"provider": "cached_demo", "model": scenario.scenario_id},
+                )
+                yield {"type": "done", "response": response}
+            except GeneratorExit:
+                return
+            except Exception as exc:  # noqa: BLE001 - SSE boundary
+                yield {"type": "error", "message": str(exc)}
+            return
         import queue
         import threading
 

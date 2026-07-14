@@ -149,9 +149,9 @@ def build_tool_protocol_block(tool_declarations: list[dict[str, Any]], *, max_to
 def known_tool_names(tool_declarations: list[dict[str, Any]] | None = None) -> set[str]:
     if tool_declarations is None:
         try:
-            from catalyst.agent.tools_decl import TOOL_DECLARATIONS
+            from catalyst.agent.tools_decl import MODEL_TOOL_DECLARATIONS
 
-            tool_declarations = TOOL_DECLARATIONS
+            tool_declarations = MODEL_TOOL_DECLARATIONS
         except Exception:
             return set()
     return {str(d.get("name") or "") for d in tool_declarations if d.get("name")}

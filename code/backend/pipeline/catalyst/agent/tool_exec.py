@@ -26,7 +26,25 @@ def _execute_tool(controller: Any, session_id: str, name: str | None, args: dict
         return {"ok": False, "error": "missing tool name"}
     args = args or {}
     result: dict[str, Any]
-    if name == "control_genome_view":
+    if name == "run_demo_scenario":
+        from catalyst.demo_scenarios import get_demo_scenario
+
+        scenario = get_demo_scenario(str(args.get("scenario_id") or ""))
+        result = (
+            {
+                "ok": True,
+                "scenario_id": scenario.scenario_id,
+                "title": scenario.title,
+                "duration_seconds": scenario.duration_seconds,
+                "mission": scenario.mission,
+                "cached": True,
+            }
+            if scenario
+            else {"ok": False, "error": "Unknown demo scenario"}
+        )
+        if scenario:
+            aggregate["citations"].append({"type": "cached_demo", "scenario_id": scenario.scenario_id})
+    elif name == "control_genome_view":
         action = str(args.get("action") or "").strip()
         gene = str(args.get("gene") or "BRCA1").upper()
         if gene != "BRCA1" or action not in {"highlight", "zoom", "showSequence"}:

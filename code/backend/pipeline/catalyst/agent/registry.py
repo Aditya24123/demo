@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from catalyst.agent.tools_decl import TOOL_DECLARATIONS
+from catalyst.agent.tools_decl import MODEL_TOOL_DECLARATIONS, TOOL_DECLARATIONS
 
 
 def all_tool_declarations() -> list[dict[str, Any]]:
@@ -23,13 +23,13 @@ def tool_names() -> list[str]:
 
 def gemini_function_declarations() -> list[dict[str, Any]]:
     """Native Gemini functionDeclarations payload."""
-    return all_tool_declarations()
+    return list(MODEL_TOOL_DECLARATIONS)
 
 
 def openai_tools_schema() -> list[dict[str, Any]]:
     """OpenAI-compatible tools array for gateways that support tool calling."""
     tools: list[dict[str, Any]] = []
-    for decl in TOOL_DECLARATIONS:
+    for decl in MODEL_TOOL_DECLARATIONS:
         name = decl.get("name")
         if not name:
             continue
@@ -48,7 +48,7 @@ def openai_tools_schema() -> list[dict[str, Any]]:
 
 def tools_markdown() -> str:
     lines = ["## Available Catalyst tools", ""]
-    for decl in TOOL_DECLARATIONS:
+    for decl in MODEL_TOOL_DECLARATIONS:
         name = decl.get("name") or "unknown"
         desc = decl.get("description") or ""
         params = decl.get("parameters") or {}

@@ -19,7 +19,7 @@ function repeatState(value: number) {
 
 export function GenesMode() {
   const [cases, setCases] = useState<GenomicsCase[]>(FALLBACK_CASES);
-  const { genomicsCaseId, setGenomicsCaseId, genomicsVariantIndex, setGenomicsVariantIndex, genomicsRepeatCount, setGenomicsRepeatCount, genomicsResetNonce, resetGenomicsCamera, setInspectorOpen, setInspectorTab, genomeState, setGenomeState, setGenomeSelection, genomeSequenceVisible, setGenomeSequenceVisible } = useCatalystLayout();
+  const { genomicsCaseId, setGenomicsCaseId, genomicsVariantIndex, setGenomicsVariantIndex, genomicsRepeatCount, setGenomicsRepeatCount, genomicsResetNonce, resetGenomicsCamera, setInspectorOpen, setInspectorTab, genomeState, setGenomeState, setGenomeSelection, genomeSequenceVisible, setGenomeSequenceVisible, demoDnaAnimation } = useCatalystLayout();
   const selected = useMemo(() => cases.find((item) => item.case_id === genomicsCaseId) || cases[0], [cases, genomicsCaseId]);
   const repeat = repeatState(genomicsRepeatCount);
 
@@ -48,7 +48,7 @@ export function GenesMode() {
     <div className="jarvis-mode-header" style={{ padding: '16px 20px 8px' }}><h1 className="text-[18px] font-semibold tracking-tight" style={{ margin: 0 }}>DNA Variant Explorer</h1><p className="text-[13px]" style={{ margin: '6px 0 0', opacity: 0.72 }}>A bounded, inspectable sequence window - drag to rotate and scroll to zoom.</p></div>
     <div style={{ display: 'flex', flex: 1, minHeight: 0, gap: 12, padding: '8px 20px 20px' }}>
       <div style={{ flex: 1, minWidth: 0, minHeight: 420, position: 'relative', overflow: 'hidden', borderRadius: 14, border: '1px solid var(--border-subtle, #273244)', background: '#090d15' }}>
-        <DnaViewer basePairs={basePairs} selectedIndex={selectedIndex} onSelect={(index) => isBrca ? setGenomeSelection(genomeState.visibleStart + index * 2) : setGenomicsVariantIndex(index)} resetNonce={genomicsResetNonce} />
+        <DnaViewer basePairs={basePairs} selectedIndex={selectedIndex} onSelect={(index) => isBrca ? setGenomeSelection(genomeState.visibleStart + index * 2) : setGenomicsVariantIndex(index)} resetNonce={genomicsResetNonce} demoAnimation={demoDnaAnimation} />
         <div style={{ position: 'absolute', top: 12, left: 12, padding: '8px 10px', borderRadius: 10, background: 'rgba(9,13,21,0.82)', border: '1px solid rgba(148,163,184,0.22)', fontSize: 12 }}><div style={{ color: '#f8fafc', fontWeight: 650 }}>{selected.gene} sequence window</div><div style={{ color: '#94a3b8', marginTop: 2 }}>{isBrca ? `Positions ${genomeState.visibleStart}-${genomeState.visibleEnd}` : `Marker ${selectedIndex + 1} of ${basePairs.length}`}</div></div>
         <button type="button" onClick={resetGenomicsCamera} title="Reset camera" style={{ position: 'absolute', right: 12, top: 12, width: 34, height: 34, display: 'grid', placeItems: 'center', borderRadius: 9, border: '1px solid rgba(148,163,184,0.26)', background: 'rgba(9,13,21,0.82)', color: '#e2e8f0' }}><RotateCcw size={15} /></button>
       </div>

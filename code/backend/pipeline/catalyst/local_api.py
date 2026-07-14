@@ -37,6 +37,7 @@ from catalyst.contracts import (
 from catalyst.exporters import write_candidate_csv, write_json_export
 from catalyst.genome_sequences import GenomeSequenceRepository
 from catalyst.genomics_demo import get_case as get_genomics_case, list_cases as list_genomics_cases
+from catalyst.demo_scenarios import scenario_catalog
 from catalyst.local_store import LocalCatalystStore
 from catalyst.project_store import ProjectStore
 from catalyst.research_mode import ResearchStore, research_status
@@ -789,6 +790,12 @@ def patch_candidate_set(candidate_set_id: str, request: CandidateSetPatchRequest
 @app.get("/agent/tools", response_model=AgentToolCatalogResponse)
 def get_agent_tool_catalog() -> dict:
     return tool_catalog(get_settings())
+
+
+@app.get("/agent/demo-scenarios", response_model=FlexibleResponse)
+def get_agent_demo_scenarios() -> dict:
+    """Readiness metadata only; triggers remain intentionally hidden from the response."""
+    return {"scenarios": scenario_catalog()}
 
 
 @app.post("/agent/chat", response_model=AgentChatResponse)

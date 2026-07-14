@@ -4,6 +4,16 @@ from typing import Any
 
 TOOL_DECLARATIONS: list[dict[str, Any]] = [
     {
+        "name": "run_demo_scenario",
+        "internal_only": True,
+        "description": "Load metadata for a registered deterministic Catalyst public-demo scenario. Playback is allowed only through an exact server-registered trigger.",
+        "parameters": {
+            "type": "object",
+            "properties": {"scenario_id": {"type": "string", "enum": ["sunlight-dna"]}},
+            "required": ["scenario_id"],
+        },
+    },
+    {
         "name": "inspect_genomics_case",
         "description": "Open a grounded DNA Variant Explorer demo case (brca1, hbb, or ctg). This is educational showcase data, not clinical interpretation.",
         "parameters": {
@@ -348,4 +358,10 @@ TOOL_DECLARATIONS: list[dict[str, Any]] = [
             "required": ["material_id"],
         },
     },
+]
+
+# Provider-visible tools intentionally exclude exact-trigger internal workflows.
+# The full list remains the canonical executor/API catalog.
+MODEL_TOOL_DECLARATIONS: list[dict[str, Any]] = [
+    declaration for declaration in TOOL_DECLARATIONS if not declaration.get("internal_only")
 ]

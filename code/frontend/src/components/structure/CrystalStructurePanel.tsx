@@ -4,6 +4,7 @@ import type { Structure3DVM } from '@/catalyst/bridge/viewModels';
 import { CrystalStructureViewer } from './CrystalStructureViewer';
 import { ElementLegend } from './ElementLegend';
 import { StructureMetrics } from './StructureMetrics';
+import { useCatalystLayout } from '@/catalyst/bridge/hooks';
 
 type CrystalStructurePanelProps = {
   structure: Structure3DVM | null;
@@ -12,6 +13,7 @@ type CrystalStructurePanelProps = {
 };
 
 export function CrystalStructurePanel({ structure, isLoading = false, error = null }: CrystalStructurePanelProps) {
+  const { demoMaterialAnimation } = useCatalystLayout();
   const showBonds = true;
   const showUnitCell = false;
   const atomScale = 0.42;
@@ -48,6 +50,7 @@ export function CrystalStructurePanel({ structure, isLoading = false, error = nu
               showUnitCell={showUnitCell}
               atomScale={atomScale}
               resetNonce={0}
+              demoAnimation={demoMaterialAnimation}
             />
             {/* Info card top-left; legend top-right. Refresh control removed. */}
             <div className="jarvis-structure-float jarvis-structure-float-top-left">

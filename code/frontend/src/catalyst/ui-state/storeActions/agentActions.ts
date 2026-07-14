@@ -115,6 +115,9 @@ export function createAgentActions(set: SetState, get: GetState): Partial<AppSta
     try {
       let sawTokens = false;
       let sawDone = false;
+      const streamController = new AbortController();
+      const resetListener = () => streamController.abort();
+      if (typeof window !== 'undefined') window.addEventListener('catalyst:demo-reset', resetListener, { once: true });
       await api.agentChatStream(
         {
           session_id: sessionId,
@@ -137,6 +140,11 @@ export function createAgentActions(set: SetState, get: GetState): Partial<AppSta
             }
             patchStreamText(token);
           },
+          onCheckpoint: async (actions, actionId) => {
+            await get().applyUiActions(actions);
+            if (actionId) await api.confirmAction(actionId).catch(() => {});
+          },
+          signal: streamController.signal,
           onDone: (response) => {
             sawDone = true;
             void finishFromChatResponse(response);
@@ -157,6 +165,7 @@ export function createAgentActions(set: SetState, get: GetState): Partial<AppSta
           },
         },
       );
+      if (typeof window !== 'undefined') window.removeEventListener('catalyst:demo-reset', resetListener);
       // Stream closed without a terminal event ? fall through to non-stream below.
       if (sawDone || !get().agentLoading) return;
       if (sawTokens) {
@@ -164,7 +173,17 @@ export function createAgentActions(set: SetState, get: GetState): Partial<AppSta
         return;
       }
       throw new Error('stream_incomplete');
-    } catch {
+    } catch (streamErr) {
+      if (streamErr instanceof DOMException && streamErr.name === 'AbortError') {
+        set((s) => ({
+          agentMessages: s.agentMessages.map((msg) => msg.id === streamId ? { ...msg, text: msg.text || 'Demo reset.' } : msg),
+          agentLoading: false,
+          agentActivity: null,
+          agentTurnStartedAt: null,
+          agentLastTurnDurationMs: Date.now() - (s.agentTurnStartedAt || startedAt),
+        }));
+        return;
+      }
       // Silent non-stream fallback ? keep "Thinking?" (never flash "Retrying?").
       try {
         set((s) => ({ agentActivity: s.agentActivity || 'Thinking?' }));

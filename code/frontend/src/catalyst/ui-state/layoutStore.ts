@@ -19,6 +19,31 @@ export type CommandMode = 'search' | 'ask' | 'screen';
 export type DensityMode = 'comfortable' | 'compact';
 export type InspectorTab = 'overview' | 'properties' | 'evidence' | 'agent';
 export type GenomicsCaseId = 'brca1' | 'hbb' | 'ctg';
+export type DemoMissionItem = { id: string; label: string };
+export type DemoAnimation = { phase: 'assemble' | 'focus'; startedAt: number; durationMs: number; nonce: number };
+export type DemoState = {
+  scenarioId: string | null;
+  title: string;
+  running: boolean;
+  complete: boolean;
+  totalMs: number;
+  startedAt: number | null;
+  currentStepId: string | null;
+  mission: DemoMissionItem[];
+  briefTitle: string | null;
+};
+
+const EMPTY_DEMO_STATE: DemoState = {
+  scenarioId: null,
+  title: '',
+  running: false,
+  complete: false,
+  totalMs: 0,
+  startedAt: null,
+  currentStepId: null,
+  mission: [],
+  briefTitle: null,
+};
 
 export interface LayoutState {
   activeSheet: ActiveSheet;
@@ -58,6 +83,11 @@ export interface LayoutState {
   setGenomeViewport: (start: number, end: number) => void;
   genomeSequenceVisible: boolean;
   setGenomeSequenceVisible: (visible: boolean) => void;
+  demoState: DemoState;
+  demoMaterialAnimation: DemoAnimation | null;
+  demoDnaAnimation: DemoAnimation | null;
+  applyDemoAction: (action: Record<string, unknown>) => void;
+  resetDemo: () => void;
 
   inspectorOpen: boolean;
   setInspectorOpen: (open: boolean) => void;
@@ -159,6 +189,38 @@ export const useLayoutStore = create<LayoutState>((set) => ({
   setGenomeViewport: (start, end) => set((s) => ({ genomeState: normalizeGenomeState({ ...s.genomeState, visibleStart: start, visibleEnd: end, selectedPosition: Math.max(start, Math.min(end, s.genomeState.selectedPosition)) }) })),
   genomeSequenceVisible: false,
   setGenomeSequenceVisible: (visible) => set({ genomeSequenceVisible: visible }),
+  demoState: EMPTY_DEMO_STATE,
+  demoMaterialAnimation: null,
+  demoDnaAnimation: null,
+  applyDemoAction: (action) => set((state) => {
+    const type = String(action.type || '');
+    if (type === 'demo_start') {
+      return {
+        demoState: {
+          scenarioId: String(action.scenario_id || ''),
+          title: String(action.title || 'Guided investigation'),
+          running: true,
+          complete: false,
+          totalMs: Math.max(1, Number(action.total_ms) || 160_000),
+          startedAt: Date.now(),
+          currentStepId: null,
+          mission: Array.isArray(action.mission) ? action.mission.map((item: any) => ({ id: String(item.id), label: String(item.label) })) : [],
+          briefTitle: null,
+        },
+        demoMaterialAnimation: null,
+        demoDnaAnimation: null,
+        genomeSequenceVisible: false,
+      };
+    }
+    if (type === 'demo_checkpoint') return { demoState: { ...state.demoState, currentStepId: String(action.step_id || '') } };
+    if (type === 'demo_material_assemble') return { demoMaterialAnimation: { phase: 'assemble', startedAt: Date.now(), durationMs: Math.max(1000, Number(action.duration_ms) || 26_000), nonce: Number(action.nonce) || 1 } };
+    if (type === 'demo_dna_assemble') return { demoDnaAnimation: { phase: 'assemble', startedAt: Date.now(), durationMs: Math.max(1000, Number(action.duration_ms) || 24_000), nonce: Number(action.nonce) || 1 } };
+    if (type === 'demo_dna_focus') return { demoDnaAnimation: { phase: 'focus', startedAt: Date.now(), durationMs: Math.max(1000, Number(action.duration_ms) || 10_000), nonce: Number(action.nonce) || 2 } };
+    if (type === 'demo_final_brief') return { demoState: { ...state.demoState, briefTitle: String(action.title || 'Science brief') } };
+    if (type === 'demo_complete') return { demoState: { ...state.demoState, running: false, complete: true, currentStepId: 'complete' } };
+    return {};
+  }),
+  resetDemo: () => set({ demoState: EMPTY_DEMO_STATE, demoMaterialAnimation: null, demoDnaAnimation: null, genomeSequenceVisible: false }),
 
   inspectorOpen: true,
   setInspectorOpen: (open) => set({ inspectorOpen: open }),
